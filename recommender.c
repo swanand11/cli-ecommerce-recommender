@@ -4,7 +4,7 @@
 #include <math.h>
 #include <ctype.h>
 
-#define MAX_PRODUCTS 1000
+#define MAX_PRODUCTS 20000
 #define MAX_NAME_LENGTH 200
 #define MAX_CATEGORY_LENGTH 100
 #define MAX_ORDERS 50
