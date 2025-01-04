@@ -8,7 +8,6 @@ struct OrderListItem{
     int quantity;
     struct OrderListItem* next;
 };
-// struct OrderListItem* head=NULL;
 
 struct OrderList {
     struct OrderListItem *cart[MAX_CART_SIZE];
@@ -102,6 +101,7 @@ void removeFromCart(struct Product *key){
         prev = current;
         current = current->next;
     }
+    printf("Product not found in cart");
 }
 
 int get(struct Product *key) {
@@ -124,7 +124,12 @@ void moveToWishlist(struct OrderListItem *item){
 }
 
 void displayCart() {
+    if(Cart==NULL){
+        printf("Cart is Empty\n");
+        return;
+    }
     printf("Cart Contents:\n");
+    printf("--------------------------------------------------------------------------------\n");
     for (int i = 0; i < MAX_CART_SIZE; i++) {
         struct OrderListItem *current = Cart->cart[i];
         while (current != NULL) {
@@ -136,6 +141,7 @@ void displayCart() {
             current = current->next;
         }
     }
+    printf("--------------------------------------------------------------------------------\n");
 }  
 
 void freeCart() {
@@ -158,10 +164,19 @@ void PlaceOrder(){
     printf("Confirm Order? (Y/N)\n");
     char c;
     scanf("%c",&c);
-    if(c=='N'){
+    if(c=='N' || c=='n'){
         return;
     }
     else{
+        for (int i = 0; i < MAX_CART_SIZE; i++) {
+            struct OrderListItem *current = Cart->cart[i];
+            while (current != NULL) {
+                if (current->quantity > 0) {
+                    save_order(current->product, current->quantity);
+                }
+                current = current->next;
+            }
+        }
         printf("Order Placed Successfully\n");
         freeCart();
         Cart=initCart();

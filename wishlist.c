@@ -75,7 +75,6 @@ void addToWishlist(const Product *key) {
     }
 }
 
-
 void removeFromWishlist(const Product *key) {
     unsigned int index = hashWL(key);
     struct WishListItem *current = WL->wishlist[index];
@@ -104,14 +103,19 @@ moveToCart(const Product *key){
 }
 
 void displayWishlist() {
-    printf("\nWishlist:\n");
+    if(WL==NULL){
+        printf("Wishlist is Empty\n");
+        return;
+    }
+    printf("Wishlist Contents:\n");
     printf("--------------------------------------------------------------------------------\n");
-
     for (int i = 0; i < MAX_WL_SIZE; i++) {
-        if (WL->wishlist[i]) {
-            printf("Product %d:\n", i + 1);
-            printf("  %s\n", WL->wishlist[i]->product->name);
-            printf("--------------------------------------------------------------------------------\n");
+        struct WishListItem *current = WL->wishlist[i];
+        while (current != NULL) {
+            printf("Product ID: %s, Name: %s, Price: %.2f\n", 
+                   current->product.pid, current->product.name, current->product.price);
+            current = current->next;
         }
     }
-}
+    printf("--------------------------------------------------------------------------------\n");
+}  
