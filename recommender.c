@@ -3,6 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
+#include "cart.c"
+#include "wishlist.c"
 
 #define MAX_PRODUCTS 20000
 #define MAX_NAME_LENGTH 200
@@ -11,6 +13,7 @@
 #define MAX_ORDER_LENGTH 10
 #define MIN_RATING 2.0
 #define HASHMAP_SIZE 1009  
+
 typedef struct {
     char pid[20];
     char name[MAX_NAME_LENGTH];
@@ -40,7 +43,7 @@ typedef struct {
 // Global variables
 Product products[MAX_PRODUCTS];
 int product_count = 0;
-Order orders[MAX_ORDERS];
+OrderListItem orders[MAX_ORDERS];
 int order_count = 0;
 
 // Function to trim whitespace
@@ -222,16 +225,17 @@ void view_order_history() {
     printf("--------------------------------------------------------------------------------\n");
 
     for (int i = order_count - 1; i >= 0; i--) {
+        OrderListItem *current = Cart->cart[i];
         printf("Order %d:\n", order_count - i);
-        for (int j = 0; j < orders[i].item_count; j++) {
-            printf("  %d. %s\n", j + 1, orders[i].product_names[j]);
+        for (int j = 0; j < current->quantity; j++) {
+            printf("  %d. %s\n", j + 1, current->product->name);
         }
         printf("--------------------------------------------------------------------------------\n");
     }
 }
 
 // Function to save new order
-void save_order(char **product_names, int count) {
+void save_order(char **product_names, int quantity) {
     if (count <= 0) return;
 
     // First, verify all products exist
@@ -267,7 +271,6 @@ void save_order(char **product_names, int count) {
     }
 
     order_count++;
-    printf("Order placed successfully!\n");
 }
 
 // Function to display the main menu
@@ -278,7 +281,9 @@ void display_menu() {
     printf("1. Search products\n");
     printf("2. Get product recommendations\n");
     printf("3. View order history\n");
-    printf("4. Exit\n");
+    printf("4. View Cart\n");
+    printf("5. View Wishlist\n");
+    printf("6. Exit\n");
     printf("Enter choice: ");
 }
 
@@ -309,15 +314,25 @@ int main() {
             case '3':
                 view_order_history();
                 break;
-
+            
             case '4':
+                displayCart();
+                // Display cart contents
+                break;  
+            
+            case '5':
+                displayWishlist();
+                // Display wishlist contents
+                break;
+
+            case '6':
                 printf("\nThank you for using the Product Recommendation System!\n");
                 break;
 
             default:
                 printf("\nInvalid option. Please try again.\n");
         }
-    } while (choice != '4');
+    } while (choice != '6');
 
     return 0;
 }
