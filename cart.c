@@ -1,4 +1,5 @@
 #include "Recommender.h"
+#include "wishlist.h"
 #include<stdio.h>
 #define MAX_CART_SIZE 10
 
@@ -116,15 +117,54 @@ int get(struct Product *key) {
 }
 
 void moveToWishlist(struct OrderListItem *item){
-    printf("Moved %s to wishlist\n", item->product->pid);
+    addToWishlist(item->product);
     item->quantity=1;
     removeFromCart(item->product);
     // TO WISHLIST CLI
 }
 
-// DO CLI 
-// Multiply quantity*price, display only if quantity>0
-void display(){
-    
+void displayCart() {
+    printf("Cart Contents:\n");
+    for (int i = 0; i < MAX_CART_SIZE; i++) {
+        struct OrderListItem *current = Cart->cart[i];
+        while (current != NULL) {
+            if (current->quantity > 0) {
+                printf("Product ID: %s, Name: %s, Quantity: %d, Total Price: %.2f\n", 
+                       current->product.pid, current->quantity, 
+                       current->quantity * current->product.price);
+            }
+            current = current->next;
+        }
+    }
+}  
+
+void freeCart() {
+    for (int i = 0; i < MAX_CART_SIZE; i++) {
+        struct OrderListItem *current = Cart->cart[i];
+        while (current != NULL) {
+            struct OrderListItem *temp = current;
+            current = current->next;
+            free(temp);
+        }
+    }
+    free(Cart);
+}
+
+void PlaceOrder(){
+    if(Cart==NULL){
+        printf("Cart is Empty\n");
+        return;
+    }
+    printf("Confirm Order? (Y/N)\n");
+    char c;
+    scanf("%c",&c);
+    if(c=='N'){
+        return;
+    }
+    else{
+        printf("Order Placed Successfully\n");
+        freeCart();
+        Cart=initCart();
+    }
 }
 
