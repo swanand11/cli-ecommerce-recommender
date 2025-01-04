@@ -11,7 +11,7 @@ struct OrderListItem{
 
 struct OrderList {
     struct OrderListItem *cart[MAX_CART_SIZE];
-};
+}Cart;
 
 unsigned int hash(const struct Product *key) {
     unsigned int hash = 0;
@@ -35,6 +35,8 @@ struct OrderList *initCart() {
     return hashTable;
 }
 
+Cart=initCart();
+
 struct OrderListItem *createNode(const struct Product prod){
     OrderListItem *item= (*OrderListItem)malloc(sizeof(OrderListItem));
     if (!item) {
@@ -51,32 +53,59 @@ int comparePID(const OrderListItem *key1, const OrderListItem *key2) {
     return strcmp(key1->product->pid, key2->product->pid) == 0;
 }
 
-void insert(OrderList *hashTable, const Product *key) {
+void addToCart(const Product *key) {
     unsigned int index = hash(key);
-    Product *newNode = createNode(key);
+    struct OrderListItem *newNode = createNode(key);
 
-    if (!hashTable->cart[index]) {
-        hashTable->cart[index] = newNode;
+    if (!Cart->cart[index]) {
+        Cart->cart[index] = newNode;
     } 
     else {
-        OrderListItem *current = hashTable->cart[index];
+        OrderListItem *current = Cart->cart[index];
         while (current) {
             if (comparePID(&current->product->pid, key->pid)) {
                 // Update the value if the key already exists
                 current->quantity++;
                 free(newNode);
+                printf("Added 1 quantity of %s to cart", key->pid);
                 return;
             }
             if (!current->next) break;
             current = current->next;
         }
         current->next = newNode; // Add the new node to the chain
+        printf("Added %s to cart", key->pid);
     }
 }
 
-int get(struct OrderList *hashTable, struct Product *key) {
+void removeFromCart(struct Product *key){
     unsigned int index = hash(key);
-    struct OrderList *current = hashTable->cart[index];
+    struct OrderListItem *current = Cart->cart[index];
+    struct OrderListItem *prev = NULL;
+    while (current != NULL) {
+        if (comparePID(&current->product->pid, key->pid) && current->quantity==1) {
+            if (prev) {
+                prev->next = current->next;
+            } else {
+                Cart->cart[index] = current->next;
+            }
+            free(current);
+            printf("Deleted %s from cart\n", key->pid);
+            return;
+        }
+        else if(comparePID(&current->product->pid, key->pid)) {
+            current->quantity--;
+            printf("Removed 1 quantity of %s from cart", key->pid);
+            return; 
+        }
+        prev = current;
+        current = current->next;
+    }
+}
+
+int get(struct Product *key) {
+    unsigned int index = hash(key);
+    struct OrderList *current = Cart->cart[index];
     while (current != NULL) {
         if (strcmp(current->product, key) == 0) {
             return current->quantity;
@@ -86,22 +115,11 @@ int get(struct OrderList *hashTable, struct Product *key) {
     return -1; // Key not found
 }
 
-void addItem(struct OrderListItem *item){
-    if(get(cart,item) == -1){
-        insert(item);
-    }
-    else
-        item->quantity++;
-}
-void removeItem(struct OrderListItem *item){
-    if(item->quantity == 1){
-        printf("Removed from cart");
-        item->quantity = 0;
-    }
-    if(item->quantity == 0){
-        printf("Item not in cart");
-    }
-    // TO CART CLI
+void moveToWishlist(struct OrderListItem *item){
+    printf("Moved %s to wishlist\n", item->product->pid);
+    item->quantity=1;
+    removeFromCart(item->product);
+    // TO WISHLIST CLI
 }
 
 // DO CLI 
