@@ -1,2 +1,2 @@
-#include "recommender.c"
-#include "cart.c"
+#include "recommender.h"
+#include "cart.h"
