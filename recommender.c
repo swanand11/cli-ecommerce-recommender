@@ -35,10 +35,10 @@ typedef struct {
 } HashMap;
 
 // Structure to store order information
-typedef struct {
-    char product_names[MAX_ORDER_LENGTH][MAX_NAME_LENGTH];
-    int item_count;
-} Order;
+// typedef struct {
+//     char product_names[MAX_ORDER_LENGTH][MAX_NAME_LENGTH];
+//     int item_count;
+// } Order;
 
 // Global variables
 Product products[MAX_PRODUCTS];
@@ -173,7 +173,7 @@ float calculate_order_based_score(const char* product_name) {
 
     for (int i = 0; i < order_count; i++) {
         for (int j = 0; j < orders[i].item_count; j++) {
-            if (strcmp(orders[i].product_names[j], product_name) == 0) {
+            if (strcmp(orders[i].[j], product_name) == 0) {
                 appearance_count++;
                 break;
             }
@@ -262,7 +262,7 @@ void save_order(char **product_names, int quantity) {
         order_count--;
     }
 
-    Order *new_order = &orders[order_count];
+    OrderListItem *new_order = &orders[order_count];
     new_order->item_count = 0;
 
     for (int i = 0; i < count && i < MAX_ORDER_LENGTH; i++) {
@@ -279,11 +279,10 @@ void display_menu() {
     printf("Product Recommendation System\n");
     printf("-----------------------------\n");
     printf("1. Search products\n");
-    printf("2. Get product recommendations\n");
-    printf("3. View order history\n");
-    printf("4. View Cart\n");
-    printf("5. View Wishlist\n");
-    printf("6. Exit\n");
+    printf("2. View order history\n");
+    printf("3. View Cart\n");
+    printf("4. View Wishlist\n");
+    printf("5. Exit\n");
     printf("Enter choice: ");
 }
 
@@ -311,21 +310,21 @@ int main() {
                 recommend_products(product_id, &hashmap);
                 break;
 
-            case '3':
+            case '2':
                 view_order_history();
                 break;
             
-            case '4':
+            case '3':
                 displayCart();
                 // Display cart contents
                 break;  
             
-            case '5':
+            case '4':
                 displayWishlist();
                 // Display wishlist contents
                 break;
 
-            case '6':
+            case '5':
                 printf("\nThank you for using the Product Recommendation System!\n");
                 break;
 
