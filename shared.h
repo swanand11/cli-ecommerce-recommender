@@ -27,30 +27,32 @@ typedef struct ListNode {
 } ListNode;
 
 typedef struct List {
-    ListNode* items[20];
+    ListNode** items;
     int max_size;
 } List;
 
-typedef struct HashNode {
-    char key[20];
-    Product value;
-    struct HashNode* next;
-} HashNode;
-
-typedef struct HashMap {
-    HashNode* table[HASHMAP_SIZE];
-} HashMap;
-
 // Function declarations
-void init_hashmap(HashMap* hashmap);
-void load_products(const char* filename, HashMap* hashmap);
-Product* search(HashMap* hashmap, const char* key);
-void recommend_products(const char* product_id, HashMap* hashmap);
-void initCart(void);
-void addToCart(const Product* prod);
-void initWishlist(void);
-void addToWishlist(const Product* prod);
+List* initList(int size);
+ListNode* createNode(Product product, int quantity);
+unsigned int hashItem(const Product* product, int size);
 void freeList(List* list);
+
+// Cart functions
+void addToCart(const Product* prod);
+void removeFromCart(const Product* prod);
+void displayCart(void);
+void placeOrder(void);
+
+// Wishlist functions
+void addToWishlist(const Product* prod);
+void removeFromWishlist(const Product* prod);
+void displayWishlist(void);
+void moveToCart(const Product* prod);
+
+// Recommender functions
+void load_products(const char* filename);
+void recommend_products(const char* product_id);
+void save_order(List* cart);
 
 extern List* Cart;
 extern List* WL;

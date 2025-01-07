@@ -1,53 +1,39 @@
 #include "shared.h"
 
 int main() {
-    HashMap hashmap;
-    init_hashmap(&hashmap);
-    load_products("data.csv", &hashmap);
+    load_products("data.csv");
 
-    initCart();
-    initWishlist();
+    Product test_product1 = {
+        .pid = "PID1",
+        .name = "Test Product 1",
+        .price = 100.0,
+        .category = "Electronics",
+        .rating = 4.5
+    };
 
-    Product* p1 = search(&hashmap, "PID1");
-    Product* p2 = search(&hashmap, "PID2");
+    Product test_product2 = {
+        .pid = "PID2",
+        .name = "Test Product 2",
+        .price = 150.0,
+        .category = "Electronics",
+        .rating = 4.0
+    };
+
+    printf("\nTesting Cart:\n");
+    addToCart(&test_product1);
+    addToCart(&test_product1);
+    addToCart(&test_product2);
+    displayCart();
+
+    printf("\nTesting Wishlist:\n");
+    addToWishlist(&test_product2);
+    displayWishlist();
+
+    printf("\nTesting Recommendations:\n");
+    recommend_products("PID3");
+
+    if (Cart) freeList(Cart);
+    if (WL) freeList(WL);
     
-    if (p1 && p2) {
-        printf("\nTesting Cart:\n");
-        addToCart(p1);
-        addToCart(p1);
-        addToCart(p2);
-        
-        printf("\nCart Contents:\n");
-        for (int i = 0; i < Cart->max_size; i++) {
-            ListNode* current = Cart->items[i];
-            while (current) {
-                printf("PID: %s, Name: %s, Quantity: %d\n", 
-                    current->product.pid,
-                    current->product.name,
-                    current->quantity);
-                current = current->next;
-            }
-        }
-
-        printf("\nTesting Wishlist:\n");
-        addToWishlist(p2);
-        
-        printf("\nWishlist Contents:\n");
-        for (int i = 0; i < WL->max_size; i++) {
-            ListNode* current = WL->items[i];
-            while (current) {
-                printf("PID: %s, Name: %s\n", 
-                    current->product.pid,
-                    current->product.name);
-                current = current->next;
-            }
-        }
-
-        printf("\nTesting Recommendations:\n");
-        recommend_products("PID1", &hashmap);
-    }
-
-    freeList(Cart);
-    freeList(WL);
     return 0;
 }

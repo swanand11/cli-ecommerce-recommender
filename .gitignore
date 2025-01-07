@@ -1,2 +1,4 @@
 *.py
 *.out
+*.o
+program
