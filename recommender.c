@@ -8,9 +8,10 @@ typedef struct {
     float score;
 } Recommendation;
 
-static Product products[MAX_PRODUCTS];
+
 static int product_count = 0;
 static List* orders = NULL;
+Product products[MAX_PRODUCTS];
 
 static void trim(char* str) {
     char* start = str;
@@ -34,31 +35,43 @@ void load_products(const char* filename) {
     }
 
     char line[512];
+    // Skip header line
+    fgets(line, sizeof(line), file);
+    
+    product_count = 0;
     while (fgets(line, sizeof(line), file) && product_count < MAX_PRODUCTS) {
         Product* p = &products[product_count];
         
         char* token = strtok(line, ",");
-        if (token) strncpy(p->pid, token, sizeof(p->pid) - 1);
+        if (!token) continue;
+        strncpy(p->pid, token, sizeof(p->pid) - 1);
+        p->pid[sizeof(p->pid) - 1] = '\0';
         
         token = strtok(NULL, ",");
-        if (token) {
-            strncpy(p->name, token, sizeof(p->name) - 1);
-            trim(p->name);
-        }
+        if (!token) continue;
+        strncpy(p->name, token, sizeof(p->name) - 1);
+        p->name[sizeof(p->name) - 1] = '\0';
+        trim(p->name);
         
         token = strtok(NULL, ",");
-        if (token) p->price = atof(token);
+        if (!token) continue;
+        p->price = atof(token);
         
         token = strtok(NULL, ",");
-        if (token) strncpy(p->category, token, sizeof(p->category) - 1);
+        if (!token) continue;
+        strncpy(p->category, token, sizeof(p->category) - 1);
+        p->category[sizeof(p->category) - 1] = '\0';
         
         token = strtok(NULL, ",");
-        if (token) p->rating = atof(token);
+        if (!token) continue;
+        p->rating = atof(token);
 
         product_count++;
     }
     fclose(file);
+    printf("Loaded %d products\n", product_count);
 }
+
 
 static int compare_recommendations(const void* a, const void* b) {
     return ((Recommendation*)b)->score - ((Recommendation*)a)->score;
@@ -131,7 +144,7 @@ void recommend_products(const char* product_id) {
 void save_order(List* cart) {
     if (!cart) return;
     
-    if (!orders) orders = initList(MAX_ORDERS);
+    if (!orders) orders = initList();
     
     for (int i = 0; i < 10; i++) {
         ListNode* current = cart->items[i];

@@ -1,23 +1,16 @@
 #include "shared.h"
-
-List* initList(int size) {
+List* initList() {
     List* list = (List*)malloc(sizeof(List));
     if (!list) {
         perror("Failed to allocate memory for list");
         exit(EXIT_FAILURE);
     }
     
-    list->items = (ListNode**)calloc(size, sizeof(ListNode*));
-    if (!list->items) {
-        free(list);
-        perror("Failed to allocate memory for items");
-        exit(EXIT_FAILURE);
+    for (int i = 0; i < 10; i++) {
+        list->items[i] = NULL;
     }
-    
-    list->max_size = size;
     return list;
 }
-
 ListNode* createNode(Product product, int quantity) {
     ListNode* node = (ListNode*)malloc(sizeof(ListNode));
     if (!node) {
@@ -42,7 +35,7 @@ unsigned int hashItem(const Product* product, int size) {
 void freeList(List* list) {
     if (!list) return;
     
-    for (int i = 0; i < list->max_size; i++) {
+    for (int i = 0; i < 10; i++) {
         ListNode* current = list->items[i];
         while (current) {
             ListNode* temp = current;

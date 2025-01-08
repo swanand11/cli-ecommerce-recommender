@@ -3,7 +3,7 @@
 List* WL = NULL;
 
 void addToWishlist(const Product* prod) {
-    if (!WL) WL = initList(MAX_WL_SIZE);
+    if (!WL) WL = initList();
     
     unsigned int index = hashItem(prod, MAX_WL_SIZE);
     ListNode* current = WL->items[index];

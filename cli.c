@@ -1,8 +1,5 @@
 #include "shared.h"
 
-
-static Product products[MAX_PRODUCTS];
-
 void mainMenu() {
     int choice;
     do {
@@ -16,10 +13,28 @@ void mainMenu() {
         scanf("%d", &choice);
 
         switch (choice) {
-            case 1:
-                recommend_products("PID1");
-                addToCart(&products[11]);
+            case 1: {
+                char pid[20];
+                printf("Enter Product ID to search: ");
+                scanf("%s", pid);
+                recommend_products(pid);
+                printf("\nWould you like to add this product to cart? (Y/N): ");
+                char add;
+                scanf(" %c", &add);
+                if (add == 'Y' || add == 'y') {
+                    Product* product = NULL;
+                    for (int i = 0; i < MAX_PRODUCTS; i++) {
+                        if (strcmp(products[i].pid, pid) == 0) {
+                            product = &products[i];
+                            break;
+                        }
+                    }
+                    if (product) {
+                        addToCart(product);
+                    }
+                }
                 break;
+            }
             case 2:
                 cartMenu();
                 break;

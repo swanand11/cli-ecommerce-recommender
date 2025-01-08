@@ -1,9 +1,9 @@
 #include "shared.h"
+List* Cart=NULL;
 
-static List* Cart = NULL;
 
 void addToCart(const Product* prod) {
-    if (!Cart) Cart = initList(MAX_CART_SIZE);
+    if (!Cart) Cart = initList();
     
     unsigned int index = hashItem(prod, MAX_CART_SIZE);
     ListNode* current = Cart->items[index];
@@ -49,37 +49,28 @@ void removeFromCart(const Product* prod) {
     printf("Product not found in cart\n");
 }
 
-void displayCart(List* cart) {
-    if (!Cart) {
+void displayCart() {
+    if (!Cart || !Cart->items) {
         printf("Cart is Empty\n");
         return;
     }
     
-    printf("Cart Contents:\n");
-    printf("--------------------------------------------------------------------------------\n");
-    // for (int i = 0; i < 10; i++) {
-    //     ListNode* current = Cart->items[i];
-    //     while (current) {
-    //         printf("Product ID: %s, Name: %s, Quantity: %d, Total Price: %.2f\n",
-    //                current->product.pid, current->product.name,
-    //                current->quantity, current->quantity * current->product.price);
-    //         current = current->next;
-    //     }
-    // }
-     printf("Cart Contents:\n");
+    float total = 0.0;
+    printf("\nCart Contents:\n");
     printf("--------------------------------------------------------------------------------\n");
     for (int i = 0; i < 10; i++) {
-        ListNode* current = cart->items[i];
+        ListNode* current = Cart->items[i];
         while (current) {
-            printf("Product ID: %s, Name: %s, Quantity: %d, Total Price: %.2f\n",
+            float itemTotal = current->quantity * current->product.price;
+            total += itemTotal;
+            printf("Product ID: %s\nName: %s\nQuantity: %d\nPrice per item: %.2f\nTotal: %.2f\n\n",
                    current->product.pid, current->product.name,
-                   current->quantity, current->quantity * current->product.price);
+                   current->quantity, current->product.price, itemTotal);
             current = current->next;
         }
     }
-    
-
     printf("--------------------------------------------------------------------------------\n");
+    printf("Cart Total: %.2f\n", total);
 }
 
 void placeOrder() {

@@ -30,7 +30,7 @@ typedef struct List {
 } List;
 
 // Function declarations
-List* initList(int size);
+List* initList();
 ListNode* createNode(Product product, int quantity);
 unsigned int hashItem(const Product* product, int size);
 void freeList(List* list);
@@ -58,5 +58,6 @@ void placedOrdersMenu();
 void mainMenu();
 extern List* Cart;
 extern List* WL;
+extern Product products[MAX_PRODUCTS];
 
 #endif
