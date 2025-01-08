@@ -40,6 +40,7 @@ void removeFromCart(const Product* prod) {
                 if (prev) prev->next = current->next;
                 else Cart->items[index] = current->next;
                 free(current);
+                current = NULL;
                 printf("Removed %s from cart\n", prod->pid);
             }
             return;
@@ -87,7 +88,9 @@ void placeOrder() {
     if (c == 'Y' || c == 'y') {
         save_order(Cart);
         printf("Order Placed Successfully\n");
-        freeList(Cart);
-        Cart = initList(MAX_CART_SIZE);
+        for (int i = 0; i < 10; i++) {
+            Cart->items[i] = NULL;
+        }
+        //freeList(Cart);
     }
 }

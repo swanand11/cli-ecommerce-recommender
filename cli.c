@@ -33,22 +33,35 @@ void mainMenu() {
                         addToCart(product);
                     }
                 }
+                //Add wishlist function
                 break;
             }
-            case 2:
+            case 2:{
                 cartMenu();
                 break;
-            case 3:
+            }
+            case 3:{
                 wishlistMenu();
                 break;
-            case 4:
+            }
+            case 4:{
                 placedOrdersMenu();
                 break;
-            case 5:
+            }
+            case 5:{
+                if(Cart){
+                    freeList(Cart);
+                    Cart= NULL;
+                }
+                if(WL){
+                    freeList(WL);
+                    WL= NULL;
+                }
                 printf("Exiting...\n");
-                break;
+                exit(1);
+            }
             default:
-                printf("Invalid choice. Please try again.\n");
+                    printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 5);
 }
@@ -59,17 +72,18 @@ void cartMenu() {
         printf("\nCart Menu:\n");
         printf("1) View Cart\n");
         printf("2) Remove From Cart\n");
-        printf("3) Place Order\n");
-        printf("4) Add to Wishlist\n");
+        printf("3) Add to Wishlist\n");
+        printf("4) Place Order\n");
         printf("5) Placed Orders\n");
         printf("6) Back to Main Menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
-            case 1:
+            case 1:{
                 displayCart();
                 break;
+            }
             case 2: {
                 char pid[20];
                 printf("Enter Product ID to remove: ");
@@ -88,10 +102,7 @@ void cartMenu() {
                 }
                 break;
             }
-            case 3:
-                placeOrder();
-                break;
-            case 4: {
+            case 3:{
                 char pid[20];
                 printf("Enter Product ID to add to wishlist: ");
                 scanf("%s", pid);
@@ -104,14 +115,20 @@ void cartMenu() {
                 }
                 if (product) {
                     addToWishlist(product);
-                } else {
+                } 
+                else {
                     printf("Product not found.\n");
                 }
                 break;
             }
-            case 5:
+            case 4:{
+                placeOrder();
+                break;
+            } 
+            case 5:{
                 placedOrdersMenu();
                 break;
+            }
             case 6:
                 return;
             default:
@@ -176,9 +193,8 @@ void wishlistMenu() {
                 cartMenu();
                 return;
             case 5:
-                free(Cart);
-                free(WL);
-                exit(1);
+                mainMenu();
+                return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }

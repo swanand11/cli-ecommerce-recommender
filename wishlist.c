@@ -34,6 +34,7 @@ void removeFromWishlist(const Product* prod) {
             if (prev) prev->next = current->next;
             else WL->items[index] = current->next;
             free(current);
+            current = NULL;
             printf("Removed %s from wishlist\n", prod->pid);
             return;
         }
