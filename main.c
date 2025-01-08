@@ -1,7 +1,9 @@
-#include "shared.h"
+#include "cli.c"
 
 int main() {
     load_products("data.csv");
+    mainMenu();
+    /*load_products("data.csv");
 
     Product test_product1 = {
         .pid = "PID1",
@@ -34,6 +36,7 @@ int main() {
 
     if (Cart) freeList(Cart);
     if (WL) freeList(WL);
+    */
     
     return 0;
 }
