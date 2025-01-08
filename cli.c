@@ -21,19 +21,38 @@ void mainMenu() {
                 printf("\nWould you like to add this product to cart? (Y/N): ");
                 char add;
                 scanf(" %c", &add);
-                if (add == 'Y' || add == 'y') {
-                    Product* product = NULL;
-                    for (int i = 0; i < MAX_PRODUCTS; i++) {
-                        if (strcmp(products[i].pid, pid) == 0) {
-                            product = &products[i];
-                            break;
+                
+                    if (add == 'Y' || add == 'y') {
+                        Product* product = NULL;
+                        for (int i = 0; i < MAX_PRODUCTS; i++) {
+                            if (strcmp(products[i].pid, pid) == 0) {
+                                product = &products[i];
+                                break;
+                            }
+                        }
+                        if (product) {
+                            addToCart(product);
                         }
                     }
-                    if (product) {
-                        addToCart(product);
-                    }
-                }
+                
                 //Add wishlist function
+                printf("\nWould you like to add this product to Wishlist? (Y/N): ");
+                scanf(" %c", &add);
+                
+                    if (add == 'Y' || add == 'y') {
+                        Product* product = NULL;
+                        for (int i = 0; i < MAX_PRODUCTS; i++) {
+                            if (strcmp(products[i].pid, pid) == 0) {
+                                product = &products[i];
+                                break;
+                            }
+                        }
+                        if (product) {
+                            addToWishlist(product);
+                        }
+                    }
+                
+                
                 break;
             }
             case 2:{
@@ -72,7 +91,7 @@ void cartMenu() {
         printf("\nCart Menu:\n");
         printf("1) View Cart\n");
         printf("2) Remove From Cart\n");
-        printf("3) Add to Wishlist\n");
+        printf("3) Move to Wishlist\n");
         printf("4) Place Order\n");
         printf("5) Placed Orders\n");
         printf("6) Back to Main Menu\n");
@@ -85,6 +104,7 @@ void cartMenu() {
                 break;
             }
             case 2: {
+                displayCart();
                 char pid[20];
                 printf("Enter Product ID to remove: ");
                 scanf("%s", pid);
@@ -114,7 +134,7 @@ void cartMenu() {
                     }
                 }
                 if (product) {
-                    addToWishlist(product);
+                    moveToWishlist(product);
                 } 
                 else {
                     printf("Product not found.\n");
@@ -143,7 +163,7 @@ void wishlistMenu() {
         printf("\nWishlist Menu:\n");
         printf("1) View Wishlist\n");
         printf("2) Remove from Wishlist\n");
-        printf("3) Add to Cart\n");
+        printf("3) Move to Cart\n");
         printf("4) Go to Cart\n");
         printf("5) Back to Main Menu\n");
         printf("Enter your choice: ");
@@ -154,6 +174,7 @@ void wishlistMenu() {
                 displayWishlist();
                 break;
             case 2: {
+                displayWishlist();
                 char pid[20];
                 printf("Enter Product ID to remove: ");
                 scanf("%s", pid);

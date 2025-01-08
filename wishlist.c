@@ -48,6 +48,12 @@ void moveToCart(const Product* prod) {
     if (!WL) return;
     addToCart(prod);
     removeFromWishlist(prod);
+    printf("Do you wish to view Cart? (Y/N)\n");
+    char c;
+    scanf(" %c", &c);
+    if (c == 'Y' || c == 'y') {
+        displayCart();
+    }
 }
 
 void displayWishlist() {

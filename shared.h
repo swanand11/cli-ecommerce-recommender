@@ -37,6 +37,7 @@ void freeList(List* list);
 
 // Cart functions
 void addToCart(const Product* prod);
+void moveToWishlist(const Product* prod);
 void removeFromCart(const Product* prod);
 void displayCart(void);
 void placeOrder(void);

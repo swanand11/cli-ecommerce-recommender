@@ -22,10 +22,12 @@ void addToCart(const Product* prod) {
     Cart->items[index] = newNode;
     printf("Added %s to cart\n", prod->pid);
 }
+//add a function movetoWishList
 
 void removeFromCart(const Product* prod) {
     if (!Cart) return;
     
+
     unsigned int index = hashItem(prod, MAX_CART_SIZE);
     ListNode* current = Cart->items[index];
     ListNode* prev = NULL;
@@ -92,5 +94,17 @@ void placeOrder() {
             Cart->items[i] = NULL;
         }
         //freeList(Cart);
+    }
+}
+//THE FOLLOWING CODE ISN'T EXECUTING PROPERLY
+void moveToWishlist(const Product* prod) {
+    if(!Cart) return;
+    addToWishlist(prod);
+    removeFromCart(prod);
+    printf("Do you wish to view Wishlist? (Y/N)\n");
+    char c;
+    scanf(" %c", &c);
+    if (c == 'Y' || c == 'y') {
+        displayWishlist();
     }
 }
