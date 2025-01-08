@@ -176,7 +176,9 @@ void wishlistMenu() {
                 cartMenu();
                 return;
             case 5:
-                return;
+                free(Cart);
+                free(WL);
+                exit(1);
             default:
                 printf("Invalid choice. Please try again.\n");
         }

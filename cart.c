@@ -35,6 +35,7 @@ void removeFromCart(const Product* prod) {
             if (current->quantity > 1) {
                 current->quantity--;
                 printf("Removed 1 quantity of %s from cart\n", prod->pid);
+            
             } else {
                 if (prev) prev->next = current->next;
                 else Cart->items[index] = current->next;

@@ -8,7 +8,7 @@
 #include <ctype.h>
 
 #define MAX_CART_SIZE 10
-#define MAX_WL_SIZE 20
+#define MAX_WL_SIZE 10
 #define MAX_PRODUCTS 20000
 
 typedef struct Product {
