@@ -26,8 +26,7 @@ typedef struct ListNode {
 } ListNode;
 
 typedef struct List {
-    ListNode** items;
-    int max_size;
+    ListNode* items[10];
 } List;
 
 // Function declarations
@@ -52,7 +51,11 @@ void moveToCart(const Product* prod);
 void load_products(const char* filename);
 void recommend_products(const char* product_id);
 void save_order(List* cart);
-
+void searchProduct();
+void cartMenu();
+void wishlistMenu();
+void placedOrdersMenu();
+void mainMenu();
 extern List* Cart;
 extern List* WL;
 

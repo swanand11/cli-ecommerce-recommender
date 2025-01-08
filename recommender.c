@@ -70,7 +70,7 @@ static float calculate_order_based_score(const char* product_name) {
     int appearances = 0;
     int total_orders = 0;
     
-    for (int i = 0; i < orders->max_size; i++) {
+    for (int i = 0; i < 10; i++) {
         ListNode* current = orders->items[i];
         while (current) {
             if (strcmp(current->product.name, product_name) == 0) appearances++;
@@ -133,7 +133,7 @@ void save_order(List* cart) {
     
     if (!orders) orders = initList(MAX_ORDERS);
     
-    for (int i = 0; i < cart->max_size; i++) {
+    for (int i = 0; i < 10; i++) {
         ListNode* current = cart->items[i];
         while (current) {
             ListNode* newNode = createNode(current->product, current->quantity);

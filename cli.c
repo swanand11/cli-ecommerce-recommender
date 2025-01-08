@@ -1,9 +1,7 @@
-#include "recommender.c"
+#include "shared.h"
 
-void searchProduct();
-void cartMenu();
-void wishlistMenu();
-void placedOrdersMenu();
+
+static Product products[MAX_PRODUCTS];
 
 void mainMenu() {
     int choice;
@@ -19,7 +17,8 @@ void mainMenu() {
 
         switch (choice) {
             case 1:
-                searchProduct();
+                recommend_products("PID1");
+                addToCart(&products[11]);
                 break;
             case 2:
                 cartMenu();
@@ -37,51 +36,6 @@ void mainMenu() {
                 printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 5);
-}
-
-void searchProduct() {
-    char pid[20];
-    printf("Enter Product ID to search: ");
-    scanf("%s", pid);
-
-    Product* product = NULL;
-    for (int i = 0; i < MAX_PRODUCTS; i++) {
-        if (strcmp(products[i].pid, pid) == 0) {
-            product = &products[i];
-            break;
-        }
-    }
-
-    if (product) {
-        printf("Product found: %s - %s\n", product->pid, product->name);
-        int choice;
-        do {
-            printf("\n1) Add to Cart\n");
-            printf("2) Add to Wishlist\n");
-            printf("3) Back to Search\n");
-            printf("4) Back to Main Menu\n");
-            printf("Enter your choice: ");
-            scanf("%d", &choice);
-
-            switch (choice) {
-                case 1:
-                    addToCart(product);
-                    break;
-                case 2:
-                    addToWishlist(product);
-                    break;
-                case 3:
-                    searchProduct();
-                    return;
-                case 4:
-                    return;
-                default:
-                    printf("Invalid choice. Please try again.\n");
-            }
-        } while (choice != 4);
-    } else {
-        printf("Product not found.\n");
-    }
 }
 
 void cartMenu() {

@@ -57,7 +57,7 @@ void displayWishlist() {
     
     printf("Wishlist Contents:\n");
     printf("--------------------------------------------------------------------------------\n");
-    for (int i = 0; i < WL->max_size; i++) {
+    for (int i = 0; i < 10; i++) {
         ListNode* current = WL->items[i];
         while (current) {
             printf("Product ID: %s, Name: %s, Price: %.2f\n",

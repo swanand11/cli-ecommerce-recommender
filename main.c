@@ -1,4 +1,4 @@
-#include "cli.c"
+#include "shared.h"
 
 int main() {
     load_products("data.csv");

@@ -1,6 +1,6 @@
 #include "shared.h"
 
-List* Cart = NULL;
+static List* Cart = NULL;
 
 void addToCart(const Product* prod) {
     if (!Cart) Cart = initList(MAX_CART_SIZE);
@@ -49,7 +49,7 @@ void removeFromCart(const Product* prod) {
     printf("Product not found in cart\n");
 }
 
-void displayCart() {
+void displayCart(List* cart) {
     if (!Cart) {
         printf("Cart is Empty\n");
         return;
@@ -57,8 +57,19 @@ void displayCart() {
     
     printf("Cart Contents:\n");
     printf("--------------------------------------------------------------------------------\n");
-    for (int i = 0; i < Cart->max_size; i++) {
-        ListNode* current = Cart->items[i];
+    // for (int i = 0; i < 10; i++) {
+    //     ListNode* current = Cart->items[i];
+    //     while (current) {
+    //         printf("Product ID: %s, Name: %s, Quantity: %d, Total Price: %.2f\n",
+    //                current->product.pid, current->product.name,
+    //                current->quantity, current->quantity * current->product.price);
+    //         current = current->next;
+    //     }
+    // }
+     printf("Cart Contents:\n");
+    printf("--------------------------------------------------------------------------------\n");
+    for (int i = 0; i < 10; i++) {
+        ListNode* current = cart->items[i];
         while (current) {
             printf("Product ID: %s, Name: %s, Quantity: %d, Total Price: %.2f\n",
                    current->product.pid, current->product.name,
@@ -66,6 +77,8 @@ void displayCart() {
             current = current->next;
         }
     }
+    
+
     printf("--------------------------------------------------------------------------------\n");
 }
 
