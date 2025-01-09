@@ -99,8 +99,8 @@ void placeOrder() {
 //THE FOLLOWING CODE ISN'T EXECUTING PROPERLY
 void moveToWishlist(const Product* prod) {
     if(!Cart) return;
-    addToWishlist(prod);
     removeFromCart(prod);
+    addToWishlist(prod);
     printf("Do you wish to view Wishlist? (Y/N)\n");
     char c;
     scanf(" %c", &c);

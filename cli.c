@@ -18,41 +18,44 @@ void mainMenu() {
                 printf("Enter Product ID to search: ");
                 scanf("%s", pid);
                 recommend_products(pid);
-                printf("\nWould you like to add this product to cart? (Y/N): ");
-                char add;
-                scanf(" %c", &add);
-                
-                    if (add == 'Y' || add == 'y') {
-                        Product* product = NULL;
-                        for (int i = 0; i < MAX_PRODUCTS; i++) {
-                            if (strcmp(products[i].pid, pid) == 0) {
-                                product = &products[i];
-                                break;
+                char option;
+                printf("\n1. Add this product to cart? \n");
+                printf("2. Add this product to wishlist? \n");
+                printf("3. Go back to main menu? \n");
+                printf("Enter your choice: ");
+                scanf(" %c", &option);
+                switch(option){
+                    case '1':{
+                            Product* product = NULL;
+                            for (int i = 0; i < MAX_PRODUCTS; i++) {
+                                if (strcmp(products[i].pid, pid) == 0) {
+                                    product = &products[i];
+                                    break;
+                                }
+                            }
+                            if (product) {
+                                addToCart(product);
                             }
                         }
-                        if (product) {
-                            addToCart(product);
-                        }
-                    }
-                
-                //Add wishlist function
-                printf("\nWould you like to add this product to Wishlist? (Y/N): ");
-                scanf(" %c", &add);
-                
-                    if (add == 'Y' || add == 'y') {
-                        Product* product = NULL;
-                        for (int i = 0; i < MAX_PRODUCTS; i++) {
-                            if (strcmp(products[i].pid, pid) == 0) {
-                                product = &products[i];
-                                break;
+                        break;
+                    case '2':{
+                            Product* product = NULL;
+                            for (int i = 0; i < MAX_PRODUCTS; i++) {
+                                if (strcmp(products[i].pid, pid) == 0) {
+                                    product = &products[i];
+                                    break;
+                                }
+                            }
+                            if (product) {
+                                addToWishlist(product);
                             }
                         }
-                        if (product) {
-                            addToWishlist(product);
-                        }
-                    }
-                
-                
+                        break;
+                    case '3':
+                        break;
+                    default:
+                        printf("Invalid choice. Please try again.\n");
+                }
                 break;
             }
             case 2:{

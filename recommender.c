@@ -130,7 +130,7 @@ void recommend_products(const char* product_id) {
     }
 
     qsort(recommendations, rec_count, sizeof(Recommendation), compare_recommendations);
-
+    printf("________________________________________________________________________________\n");
     printf("\nTop 5 Recommendations for %s:\n", current_product->name);
     printf("%-10s %-50s %-10s %-7s\n", "PID", "Name", "Price", "Rating");
     printf("--------------------------------------------------------------------------------\n");
@@ -139,6 +139,7 @@ void recommend_products(const char* product_id) {
         Product* p = recommendations[i].product;
         printf("%-10s %-50s ₹%-9.2f %.1f\n", p->pid, p->name, p->price, p->rating);
     }
+    printf("________________________________________________________________________________\n");
 }
 
 void save_order(List* cart) {
