@@ -41,10 +41,7 @@ void freeList(List* list) {
             ListNode* temp = current;
             current = current->next;
             free(temp);
-            temp=NULL;
         }
-        list->items[i]=NULL;
     }
     free(list);
-    list=NULL;
 }

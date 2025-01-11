@@ -141,6 +141,27 @@ void recommend_products(const char* product_id) {
     }
     printf("________________________________________________________________________________\n");
 }
+void placeOrder() {
+    if (!Cart || !Cart->items) {
+        printf("Cart is Empty\n");
+        return;
+    }
+    displayCart();
+    
+    printf("\nConfirm Order? (Y/N): ");
+    char c;
+    while (getchar() != '\n'); 
+    scanf("%c", &c);
+    
+    if (c == 'Y' || c == 'y') {
+        save_order(Cart);
+        printf("\nOrder Placed Successfully!\n");
+        freeList(Cart);
+        Cart = initList();
+    } else {
+        printf("\nOrder cancelled\n");
+    }
+}
 
 void save_order(List* cart) {
     if (!cart) return;

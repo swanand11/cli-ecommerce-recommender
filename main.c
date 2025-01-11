@@ -4,13 +4,13 @@ int main() {
     WL = NULL;
     load_products("data.csv");
     mainMenu();
-     if (Cart){
-     freeList(Cart);
-     Cart=NULL;
-     }
-     if (WL){ 
+    if (Cart) {
+        freeList(Cart);
+        Cart = NULL;
+    }
+    if (WL) {
         freeList(WL);
-        WL=NULL;
-     }
+        WL = NULL;
+    }
     return 0;
 }

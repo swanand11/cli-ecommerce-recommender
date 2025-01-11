@@ -22,7 +22,6 @@ void addToCart(const Product* prod) {
     Cart->items[index] = newNode;
     printf("Added %s to cart\n", prod->pid);
 }
-//add a function movetoWishList
 
 void removeFromCart(const Product* prod) {
     if (!Cart) return;
@@ -77,30 +76,11 @@ void displayCart() {
     printf("Cart Total: %.2f\n", total);
 }
 
-void placeOrder() {
-    if (!Cart || !Cart->items) {
-        printf("Cart is Empty\n");
-        return;
-    }
-    
-    printf("Confirm Order? (Y/N)\n");
-    char c;
-    scanf(" %c", &c);
-    
-    if (c == 'Y' || c == 'y') {
-        save_order(Cart);
-        printf("Order Placed Successfully\n");
-        for (int i = 0; i < 10; i++) {
-            Cart->items[i] = NULL;
-        }
-        //freeList(Cart);
-    }
-}
-//THE FOLLOWING CODE ISN'T EXECUTING PROPERLY
 void moveToWishlist(const Product* prod) {
     if(!Cart) return;
-    removeFromCart(prod);
     addToWishlist(prod);
+    removeFromCart(prod);
+    
     printf("Do you wish to view Wishlist? (Y/N)\n");
     char c;
     scanf(" %c", &c);

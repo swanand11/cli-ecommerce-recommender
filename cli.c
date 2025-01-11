@@ -7,8 +7,7 @@ void mainMenu() {
         printf("1) Search Product\n");
         printf("2) Cart\n");
         printf("3) Wishlist\n");
-        printf("4) Placed Orders\n");
-        printf("5) Exit\n");
+        printf("4) Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -67,25 +66,13 @@ void mainMenu() {
                 break;
             }
             case 4:{
-                placedOrdersMenu();
-                break;
-            }
-            case 5:{
-                if(Cart){
-                    freeList(Cart);
-                    Cart= NULL;
-                }
-                if(WL){
-                    freeList(WL);
-                    WL= NULL;
-                }
                 printf("Exiting...\n");
                 exit(1);
             }
             default:
                     printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 5);
+    } while (choice != 4);
 }
 
 void cartMenu() {
@@ -96,8 +83,7 @@ void cartMenu() {
         printf("2) Remove From Cart\n");
         printf("3) Move to Wishlist\n");
         printf("4) Place Order\n");
-        printf("5) Placed Orders\n");
-        printf("6) Back to Main Menu\n");
+        printf("5) Back to Main Menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -148,16 +134,12 @@ void cartMenu() {
                 placeOrder();
                 break;
             } 
-            case 5:{
-                placedOrdersMenu();
-                break;
-            }
-            case 6:
+            case 5:
                 return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 6);
+    } while (choice != 5);
 }
 
 void wishlistMenu() {
@@ -225,8 +207,4 @@ void wishlistMenu() {
     } while (choice != 5);
 }
 
-void placedOrdersMenu() {
-    printf("Placed Orders:\n");
-    // Implement the logic to display placed orders
-}
 
