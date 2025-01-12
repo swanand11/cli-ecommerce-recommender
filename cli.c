@@ -3,11 +3,14 @@
 void mainMenu() {
     int choice;
     do {
-        printf("\nMain Menu:\n");
+        printf("\n==============================\n");
+        printf("          Main Menu           \n");
+        printf("==============================\n");
         printf("1) Search Product\n");
         printf("2) Cart\n");
         printf("3) Wishlist\n");
         printf("4) Exit\n");
+        printf("==============================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -70,7 +73,7 @@ void mainMenu() {
                 exit(1);
             }
             default:
-                    printf("Invalid choice. Please try again.\n");
+                printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 4);
 }
@@ -78,20 +81,22 @@ void mainMenu() {
 void cartMenu() {
     int choice;
     do {
-        printf("\nCart Menu:\n");
+        printf("\n==============================\n");
+        printf("          Cart Menu           \n");
+        printf("==============================\n");
         printf("1) View Cart\n");
         printf("2) Remove From Cart\n");
         printf("3) Move to Wishlist\n");
         printf("4) Place Order\n");
         printf("5) Back to Main Menu\n");
+        printf("==============================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
-            case 1:{
+            case 1:
                 displayCart();
                 break;
-            }
             case 2: {
                 displayCart();
                 char pid[20];
@@ -111,9 +116,10 @@ void cartMenu() {
                 }
                 break;
             }
-            case 3:{
+            case 3: {
+                displayCart();
                 char pid[20];
-                printf("Enter Product ID to add to wishlist: ");
+                printf("Enter Product ID to move to wishlist: ");
                 scanf("%s", pid);
                 Product* product = NULL;
                 for (int i = 0; i < MAX_PRODUCTS; i++) {
@@ -124,8 +130,7 @@ void cartMenu() {
                 }
                 if (product) {
                     moveToWishlist(product);
-                } 
-                else {
+                } else {
                     printf("Product not found.\n");
                 }
                 break;
@@ -145,12 +150,15 @@ void cartMenu() {
 void wishlistMenu() {
     int choice;
     do {
-        printf("\nWishlist Menu:\n");
+        printf("\n==============================\n");
+        printf("        Wishlist Menu         \n");
+        printf("==============================\n");
         printf("1) View Wishlist\n");
         printf("2) Remove from Wishlist\n");
         printf("3) Move to Cart\n");
         printf("4) Go to Cart\n");
         printf("5) Back to Main Menu\n");
+        printf("==============================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -178,8 +186,9 @@ void wishlistMenu() {
                 break;
             }
             case 3: {
+                displayWishlist();
                 char pid[20];
-                printf("Enter Product ID to add to cart: ");
+                printf("Enter Product ID to move to cart: ");
                 scanf("%s", pid);
                 Product* product = NULL;
                 for (int i = 0; i < MAX_PRODUCTS; i++) {
@@ -195,16 +204,14 @@ void wishlistMenu() {
                 }
                 break;
             }
-            case 4:
+            case 4:{
                 cartMenu();
-                return;
+                break;
+            }
             case 5:
-                mainMenu();
                 return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 5);
 }
-
-
